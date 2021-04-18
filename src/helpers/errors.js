@@ -1,13 +1,14 @@
-export const JOI_ERROR = 'JOI_ERROR';
+export const VALIDATION_SCHEMA_ERROR = 'VALIDATION_SCHEMA_ERROR';
 
 export const joiHandler = async (dto, body) => {
   try {
-    await dto.validateAsync(body);
+    await dto.validateAsync(body, { abortEarly: false });
   } catch (error) {
-    const message = error.details[0].message;
+    const message = error.details;
     const err = new Error();
-    err.type = 'JOI_ERROR';
+    err.type = 'VALIDATION_SCHEMA_ERROR';
     err.message = message;
+    err.code = 400;
     throw err;
   }
 };

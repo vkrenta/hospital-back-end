@@ -3,13 +3,17 @@ import mongoose from 'mongoose';
 import errorMiddleware from './middlewares/error-middleware.js';
 import notFoundMiddleware from './middlewares/not-found-middleware.js';
 import hospitalRouter from './routes/admin/hospital-router.js';
+import cors from 'cors';
+import userRouter from './routes/admin/user-router.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use('/api/hospitals', hospitalRouter);
+app.use('/api/users', userRouter);
 
 app.use(errorMiddleware);
 app.use(notFoundMiddleware);

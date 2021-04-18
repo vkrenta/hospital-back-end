@@ -16,4 +16,31 @@ hospitalRouter.post('/', async (req, res, next) => {
   }
 });
 
+hospitalRouter.get('/', async (req, res, next) => {
+  try {
+    const { page } = req.query;
+    if (!page)
+      res.status(400).send({ error: 'Page parameter in query is absent' });
+    const hospitals = await Hospital.paginate(
+      {},
+      {
+        limit: 10,
+        page,
+      }
+    );
+    res.send(hospitals.docs);
+  } catch (error) {
+    next(error);
+  }
+});
+
+hospitalRouter.get('/count', async (req, res, next) => {
+  try {
+    const count = await Hospital.count();
+    res.send({ count });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default hospitalRouter;
