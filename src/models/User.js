@@ -4,7 +4,8 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 const { model, Schema } = mongoose;
 
 const schema = new Schema({
-  id: { type: Number, required: true, unique: true },
+  login: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   name: { type: String, required: true },
   hospitalId: { type: Schema.Types.ObjectId, ref: 'hospitals' },
   role: { type: String, required: true },

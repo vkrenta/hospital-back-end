@@ -8,7 +8,7 @@ export const joiHandler = async (dto, body) => {
     const err = new Error();
     err.type = 'VALIDATION_SCHEMA_ERROR';
     err.message = message;
-    err.code = 400;
+    err.status = 400;
     throw err;
   }
 };
