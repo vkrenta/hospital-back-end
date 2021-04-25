@@ -7,7 +7,7 @@ const hospitalRouter = Router();
 
 hospitalRouter.post('/', async (req, res, next) => {
   try {
-    await joiHandler(hospitalDto, req.body);
+    // await joiHandler(hospitalDto, req.body);
     const { id, city, title, address } = req.body;
     const hospital = await new Hospital({ id, city, title, address }).save();
     res.send(hospital);
@@ -45,7 +45,7 @@ hospitalRouter.get('/count', async (req, res, next) => {
 
 hospitalRouter.get('/names', async (req, res, next) => {
   try {
-    const items = await Hospital.find({}, '_id id city title').exec();
+    const items = await Hospital.find({}, '_id id city title totalBeds').exec();
     const names = items.map((item) => {
       return {
         hospitalId: item._id,

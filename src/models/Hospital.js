@@ -9,6 +9,8 @@ const schema = new Schema({
   title: { type: String, require: true },
   address: { type: String, require: true },
   createdAt: { type: Date, default: Date.now },
+  totalBeds: { type: Number },
+  users: [{ type: Schema.Types.ObjectId, ref: 'users' }],
 });
 
 schema.plugin(mongoosePaginate);

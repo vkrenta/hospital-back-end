@@ -5,6 +5,8 @@ import notFoundMiddleware from './middlewares/not-found-middleware.js';
 import hospitalRouter from './routes/admin/hospital-router.js';
 import cors from 'cors';
 import userRouter from './routes/admin/user-router.js';
+import User from './models/User.js';
+import { hash } from 'bcrypt';
 
 const app = express();
 
@@ -26,6 +28,18 @@ app.listen(process.env.PORT, async () => {
       useNewUrlParser: 1,
     });
     console.log('Succefull connection to database');
+
+    let SuperAdmin = await User.findOne({ role: 'SUPERADMIN' }).exec();
+    if (!SuperAdmin) {
+      SuperAdmin = await new User({
+        login: process.env.SA_LOGIN,
+        password: await hash(process.env.SA_PASSWORD, 10),
+        name: process.env.SA_NAME,
+        role: 'SUPERADMIN',
+      }).save();
+    }
+
+    console.log(SuperAdmin);
   } catch (error) {
     console.log('Database error: ', error);
     process.exit(-1);
