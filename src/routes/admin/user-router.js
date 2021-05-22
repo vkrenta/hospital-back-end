@@ -48,7 +48,6 @@ userRouter.get('/', async (req, res, next) => {
         page,
       }
     );
-    console.log('docs', users.docs);
     res.send(users.docs);
   } catch (error) {
     next(error);
