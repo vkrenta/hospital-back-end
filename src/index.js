@@ -7,6 +7,7 @@ import cors from 'cors';
 import userRouter from './routes/admin/user-router.js';
 import User from './models/User.js';
 import { hash } from 'bcrypt';
+import patientRouter from './routes/hospital/patient-router.js';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use('/api/hospitals', hospitalRouter);
 app.use('/api/users', userRouter);
+app.use('/api/patients', patientRouter);
 
 app.use(errorMiddleware);
 app.use(notFoundMiddleware);

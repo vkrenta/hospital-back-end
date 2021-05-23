@@ -56,12 +56,12 @@ hospitalRouter.get('/count', async (req, res, next) => {
 
 hospitalRouter.get('/names', async (req, res, next) => {
   try {
-    const items = await Hospital.find({}).exec();
+    const items = await Hospital.find({}).populate('city').exec();
     const names = items.map((item) => {
       console.log(item);
       return {
         hospitalId: item._id,
-        text: `${item.id}, ${item.city}, ${item.title}`,
+        text: `${item.id}, ${item.city.title}, ${item.title}`,
       };
     });
 

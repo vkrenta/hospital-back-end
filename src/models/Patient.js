@@ -5,7 +5,7 @@ const { model, Schema } = mongoose;
 
 const schema = new Schema({
   hospital: { type: Schema.Types.ObjectId, ref: 'hospitals' },
-  name: { type: String, required: true },
+  name: { type: String, require: true },
   gender: { type: Number, require: true },
   age: { type: Number },
   condition: {
@@ -21,11 +21,11 @@ const schema = new Schema({
     enum: ['На утримуванні', 'Одужання', 'Летальний випадок'],
   },
   description: String,
-  hospitalizaedAt: Date,
+  hospitalizedAt: Date,
   resultAt: Date,
-  createdAt: Date,
+  createdAt: { type: Date, default: Date.now },
   updatedAt: Date,
-  mergedAt: Date,
+  consolidetAt: Date,
 });
 
 schema.plugin(mongoosePaginate);
