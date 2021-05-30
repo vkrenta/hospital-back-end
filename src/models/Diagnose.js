@@ -7,6 +7,6 @@ const schema = new Schema({
   patients: [{ type: Schema.Types.ObjectId, ref: 'patients' }],
 });
 
-const Diagnose = model('cities', schema);
+const Diagnose = model('diagnoses', schema);
 
 export default Diagnose;
