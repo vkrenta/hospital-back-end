@@ -55,14 +55,14 @@ patientRouter.post('/', async (req, res, next) => {
       description,
       hospitalizedAt,
       resultAt,
-    } = req;
-    const hospital = await Hospital.findById(hospitalId);
+    } = req.body;
+    const hospital = await Hospital.findById(hospitalId).exec();
     const symptoms = await Promise.all(
       symptomIds.map((id) => {
-        return Symptom.findOne({ title: id });
+        return Symptom.findOne({ title: id }).exec();
       })
     );
-    const diagnose = await Diagnose.findOne({ title: diagnoseId });
+    const diagnose = await Diagnose.findOne({ title: diagnoseId }).exec();
     const patient = await new Patient({
       hospital,
       name,
@@ -77,7 +77,7 @@ patientRouter.post('/', async (req, res, next) => {
       resultAt,
       description,
       hospitalizedAt,
-    });
+    }).save();
     res.send(patient);
   } catch (e) {
     next(e);
