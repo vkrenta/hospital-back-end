@@ -8,8 +8,19 @@ import userRouter from './routes/admin/user-router.js';
 import User from './models/User.js';
 import { hash } from 'bcrypt';
 import patientRouter from './routes/hospital/patient-router.js';
+import formData from 'express-form-data';
+import os from 'os';
 
 const app = express();
+const options = {
+  uploadDir: os.tmpdir(),
+  autoClean: true,
+};
+
+app.use(formData.parse(options));
+app.use(formData.format());
+// app.use(formData.stream());
+app.use(formData.union());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

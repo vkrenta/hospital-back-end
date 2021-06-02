@@ -25,15 +25,36 @@ patientRouter.get('/symptoms', async (req, res, next) => {
   }
 });
 
-patientRouter.get('/id=:id', async (req, res, next) => {
+// patientRouter.get('/id=:id', async (req, res, next) => {
+//   try {
+//     if (!id) {
+//       const patient = await Patient.findById(req.patientId);
+//       res.send(patient);
+//     } else {
+//       const patients = await Patient.find();
+//       res.send(patients);
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+patientRouter.get('/:hospitalId', async (req, res, next) => {
   try {
-    if (!id) {
-      const patient = await Patient.findById(req.patientId);
-      res.send(patient);
-    } else {
-      const patients = await Patient.find();
-      res.send(patients);
-    }
+    const hospital = await Hospital.findById(req.params.hospitalId).exec();
+    const patients = await Patient.find({ hospital })
+      .populate('symptoms')
+      .populate('diagnose')
+      .exec();
+    res.send(patients);
+  } catch (error) {
+    next(error);
+  }
+});
+
+patientRouter.post('/csv', async (req, res, next) => {
+  try {
+    console.log(req.body);
   } catch (error) {
     next(error);
   }
