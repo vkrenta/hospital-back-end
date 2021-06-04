@@ -9,7 +9,7 @@ const hospitalRouter = Router();
 hospitalRouter.post('/', async (req, res, next) => {
   try {
     // await joiHandler(hospitalDto, req.body);
-    const { id, city, title, address } = req.body;
+    const { id, city, title, address, totalBeds } = req.body;
     let dbCity = await City.findOne({ title: city }).exec();
     if (!dbCity) dbCity = await new City({ title: city }).save();
     const hospital = await new Hospital({
@@ -17,6 +17,7 @@ hospitalRouter.post('/', async (req, res, next) => {
       city: dbCity,
       title,
       address,
+      totalBeds,
     }).save();
     res.send(hospital);
   } catch (error) {

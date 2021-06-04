@@ -10,6 +10,7 @@ import { hash } from 'bcrypt';
 import patientRouter from './routes/hospital/patient-router.js';
 import formData from 'express-form-data';
 import os from 'os';
+import statsRouter from './routes/stats-router.js';
 
 const app = express();
 const options = {
@@ -29,6 +30,7 @@ app.use(cors());
 app.use('/api/hospitals', hospitalRouter);
 app.use('/api/users', userRouter);
 app.use('/api/patients', patientRouter);
+app.use('/api/stats', statsRouter);
 
 app.use(errorMiddleware);
 app.use(notFoundMiddleware);
